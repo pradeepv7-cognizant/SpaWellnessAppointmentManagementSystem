@@ -8,6 +8,9 @@ namespace SerenitySpa.Controllers
         public IActionResult Index() => View();
 
         public IActionResult Services() => View();
+
+        
+
     }
 }
 

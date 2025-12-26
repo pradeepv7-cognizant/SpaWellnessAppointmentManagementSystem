@@ -1,8 +1,251 @@
 ﻿@{
-    Layout = "_Layout";
+    ViewData["Title"] = "My Profile - Serenity Spa";
+
+    
+    var fullName = ViewBag.FullName ?? "Sarah Johnson";
+    var email = ViewBag.Email ?? "customer@demo.com";
+    var phone = ViewBag.Phone ?? "(+91) 123-4567";
+    var location = ViewBag.Location ?? "New Delhi, India";
 }
+
+@section Styles {
+    <style>
+        .text-purple {
+            color: #9333ea !important;
+        }
+
+        .bg-purple-gradient {
+            background: linear-gradient(135deg, #9333ea, #db2777);
+        }
+
+        
+        .nav-link {
+            cursor: pointer;
+            border: none !important;
+            color: #6c757d;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .nav-link.active-spa {
+                border-bottom: 3px solid #9333ea !important;
+                color: #9333ea !important;
+                font-weight: bold;
+            }
+
+        /* Visibility Logic */
+        .tab-content-panel {
+            display: none;
+        }
+
+            .tab-content-panel.active {
+                display: block;
+            }
+
+        /* Avatar Styling */
+        .staff-avatar-circle {
+            width: 100px;
+            height: 100px;
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Payment Table Styling */
+        .table thead th {
+            background-color: #f8f9fa;
+            border-top: none;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        .badge-success-spa {
+            background-color: #10b981;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+    </style>
+}
+
 <div class="container py-5">
-    <h2 class="fw-bold mb-4">Customer Profile</h2>
-    <p class="text-muted">Welcome back! View your bookings and wellness plans.</p>
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4 text-center">
+                    <div class="mb-3">
+                        <div class="rounded-circle bg-purple-gradient text-white mx-auto staff-avatar-circle">👤</div>
+                    </div>
+                    <h4 class="fw-bold mb-1">@fullName</h4>
+                    <p class="text-muted mb-4 small">CUSTOMER</p>
+                    <div class="text-start border-top pt-3">
+                        <div class="mb-2">📧 <span class="text-muted ms-2">@email</span></div>
+                        <div class="mb-2">📞 <span class="text-muted ms-2">@phone</span></div>
+                        <div>📍 <span class="text-muted ms-2">@location</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">Statistics</h6>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Total Appointments</span><strong>4</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Completed</span><strong class="text-success">2</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Upcoming</span><strong class="text-primary">2</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">Total Spent</span><strong class="text-purple">Rs638.00</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <ul class="nav nav-tabs nav-fill mb-4" id="spaTabs">
+                <li class="nav-item">
+                    <a class="nav-link active-spa" data-target="upcoming">Upcoming Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-target="past">Past Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-target="payments">Payment History</a>
+                </li>
+            </ul>
+
+            <div id="upcoming" class="tab-content-panel active">
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div><h5 class="fw-bold mb-0">Swedish Massage</h5><span class="badge bg-success">Confirmed</span></div>
+                            <span class="text-muted">#APT12345</span>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">📅 2025-12-22</div>
+                            <div class="col-6">🕐 10:00 AM (60 min)</div>
+                            <div class="col-6">👤 Emma Thompson</div>
+                            <div class="col-6"><span class="fw-bold text-purple h5">Rs532.00</span></div>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm me-2">Cancel Appointment</button>
+                        <button class="btn btn-outline-primary btn-sm">Reschedule</button>
+                    </div>
+                </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div><h5 class="fw-bold mb-0">Anti-Aging Facial</h5><span class="badge bg-success">Confirmed</span></div>
+                            <span class="text-muted">#APT12346</span>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">📅 2025-12-25</div>
+                            <div class="col-6">🕐 02:00 PM (60 min)</div>
+                            <div class="col-6">👤 Sarah Lee</div>
+                            <div class="col-6"><span class="fw-bold text-purple h5">Rs1098.00</span></div>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm me-2">Cancel Appointment</button>
+                        <button class="btn btn-outline-primary btn-sm">Reschedule</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="past" class="tab-content-panel">
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div><h5 class="fw-bold mb-0">Deep Tissue Massage</h5><span class="badge bg-secondary">Completed</span></div>
+                            <span class="text-muted">#APT12340</span>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">📅 2025-12-10</div>
+                            <div class="col-6">🕐 03:00 PM (90 min)</div>
+                            <div class="col-6">👤 Michael Rodriguez</div>
+                            <div class="col-6"><span class="fw-bold text-purple h5">Rs1065.00</span></div>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm me-2">View Receipt</button>
+                        <button class="btn btn-outline-secondary btn-sm">Book Again</button>
+                    </div>
+                </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div><h5 class="fw-bold mb-0">Aromatherapy Massage</h5><span class="badge bg-secondary">Completed</span></div>
+                            <span class="text-muted">#APT12338</span>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">📅 2025-12-05</div>
+                            <div class="col-6">🕐 11:00 AM (60 min)</div>
+                            <div class="col-6">👤 Emma Thompson</div>
+                            <div class="col-6"><span class="fw-bold text-purple h5">Rs1043.00</span></div>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm me-2">View Receipt</button>
+                        <button class="btn btn-outline-secondary btn-sm">Book Again</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="payments" class="tab-content-panel">
+                <div class="card border-0 shadow-sm overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Payment ID</th>
+                                    <th>Appointment</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="ps-4">PAY98765</td>
+                                    <td>APT12340</td>
+                                    <td>2025-12-10</td>
+                                    <td class="fw-bold">Rs1065.00</td>
+                                    <td>Credit Card</td>
+                                    <td class="text-center"><span class="badge-success-spa">✓ SUCCESS</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4">PAY98764</td>
+                                    <td>APT12338</td>
+                                    <td>2025-12-05</td>
+                                    <td class="fw-bold">Rs1043.00</td>
+                                    <td>Digital Wallet</td>
+                                    <td class="text-center"><span class="badge-success-spa">✓ SUCCESS</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.nav-link').click(function() {
+                
+                $('.nav-link').removeClass('active-spa');
+                
+                $(this).addClass('active-spa');
+
+                
+                var targetId = $(this).data('target');
+                $('.tab-content-panel').removeClass('active');
+                
+                $('#' + targetId).addClass('active');
+            });
+        });
+    </script>
+}

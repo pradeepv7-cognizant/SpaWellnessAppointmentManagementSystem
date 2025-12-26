@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\NewFolder\" />
+    <Folder Include="Views\Service\" />
+  </ItemGroup>
+
 </Project>

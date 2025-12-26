@@ -1,8 +1,375 @@
 ﻿@{
-    Layout = "_Layout";
+    ViewData["Title"] = "Staff Dashboard";
+    Layout = null;
 }
-<div class="container py-5">
-    <h2 class="fw-bold mb-4 text-primary">Staff Dashboard</h2>
-    <p class="text-muted">View appointments and client details.</p>
-</div>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Serenity Spa</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-purple: #9333ea;
+            --soft-bg: #fdf2f8;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: white !important;
+            border-bottom: 2px solid #f3e8ff;
+        }
+
+        .brand-text {
+            font-weight: 700;
+            color: var(--primary-purple);
+        }
+
+        .card {
+            border-radius: 12px;
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        .staff-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(to bottom right, #a855f7, #ec4899);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            margin: 0 auto;
+        }
+
+        .text-purple {
+            color: var(--primary-purple);
+        }
+
+        /* Tab Styling */
+        .nav-tabs {
+            border-bottom: none;
+            gap: 10px;
+        }
+
+            .nav-tabs .nav-link {
+                border: 1px solid #e5e7eb;
+                border-radius: 8px !important;
+                color: #6b7280;
+                padding: 10px 25px;
+                font-weight: 500;
+                background: white;
+            }
+
+                .nav-tabs .nav-link.active {
+                    color: var(--primary-purple) !important;
+                    border: 2px solid var(--primary-purple) !important;
+                    font-weight: 700;
+                    background: white !important;
+                }
+
+        .notes-display-box {
+            background-color: #e0f2fe;
+            border: none;
+            color: #0369a1;
+            border-left: 4px solid #38bdf8;
+            border-radius: 4px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+
+        .btn-success {
+            background-color: #10b981;
+            border: none;
+        }
+
+        .badge-confirmed {
+            background-color: #10b981;
+            font-size: 10px;
+        }
+
+        .timeline-box {
+            border-left: 2px dashed #e5e7eb;
+            padding-left: 15px;
+        }
+
+        
+        .table thead th {
+            background-color: white;
+            border-bottom: 2px solid #f3e8ff;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .badge-completed {
+            background-color: #6b7280;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <span class="me-2">✨</span>
+                <span class="brand-text">Serenity Spa - Staff Portal</span>
+            </a>
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <span class="text-muted">Welcome, <strong>Staff Member</strong></span>
+                <button class="btn btn-outline-danger btn-sm" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4 py-5">
+        <div class="row g-4">
+            <div class="col-lg-3">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <div class="staff-avatar mb-3">👤</div>
+                            <h5 class="fw-bold mb-1">Emma Thompson</h5>
+                            <p class="text-muted small mb-0">Senior Therapist</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between p-3 bg-light rounded mb-3">
+                            <div class="d-flex align-items-center">
+                                <span class="me-2 text-success fw-bold" id="availabilityIcon">✓</span>
+                                <span class="fw-bold">Availability</span>
+                            </div>
+                            <button class="btn btn-sm btn-success" id="availabilityBtn" onclick="toggleAvailability()">Available</button>
+                        </div>
+                        <div class="small">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Today's Appointments</span>
+                                <strong class="text-purple">3</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Completed Today</span>
+                                <strong class="text-success">0</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Total This Month</span>
+                                <strong>28</strong>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Rating</span>
+                                <strong class="text-warning">★ 4.9</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h6 class="fw-bold mb-3">Quick Actions</h6>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm">View Schedule</button>
+                            <button class="btn btn-outline-secondary btn-sm">Update Availability</button>
+                            <button class="btn btn-outline-info btn-sm">View Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-end mb-4">
+                    <div>
+                        <h2 class="fw-bold mb-0">My Schedule</h2>
+                        <p class="text-muted">Manage your appointments and availability</p>
+                    </div>
+                    <div class="text-end">
+                        <div class="text-muted small">Today's Date</div>
+                        <div class="fw-bold">December 18, 2025</div>
+                    </div>
+                </div>
+
+                <ul class="nav nav-tabs mb-4">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="btnToday" onclick="switchTab('today')">Today's Schedule</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="btnCompleted" onclick="switchTab('completed')">Completed Appointments</button>
+                    </li>
+                </ul>
+
+                <div id="todayTab">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-md-8 border-end">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <h5 class="fw-bold mb-0">Swedish Massage <span class="badge badge-confirmed ms-2">Confirmed</span></h5>
+                                        <span class="text-muted small">#APT12345</span>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <small class="text-muted d-block">Customer</small>
+                                            <strong>👤 Sarah Johnson</strong>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted d-block">Time</small>
+                                            <strong>🕒 10:00 AM (60 min)</strong>
+                                        </div>
+                                    </div>
+                                    <div class="notes-display-box" id="note-APT12345">
+                                        <small>📝 <strong>Notes:</strong> <span class="note-text">Prefers medium pressure</span></small>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-success btn-sm px-3">✓ Mark Completed</button>
+                                        <button class="btn btn-light btn-sm border px-3" onclick="addNote('APT12345')">📝 Add Notes</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ps-md-4">
+                                    <h6 class="fw-bold small mb-3 text-muted">Timeline</h6>
+                                    <div class="timeline-box">
+                                        <div class="mb-2"><small class="text-muted">Start</small><br><strong>10:00 AM</strong></div>
+                                        <div><small class="text-muted">End</small><br><strong>11:00 AM</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-md-8 border-end">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <h5 class="fw-bold mb-0">Deep Tissue Massage <span class="badge badge-confirmed ms-2">Confirmed</span></h5>
+                                        <span class="text-muted small">#APT12347</span>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <small class="text-muted d-block">Customer</small>
+                                            <strong>👤 Michael Chen</strong>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted d-block">Time</small>
+                                            <strong>🕒 02:00 PM (90 min)</strong>
+                                        </div>
+                                    </div>
+                                    <div class="notes-display-box" id="note-APT12347">
+                                        <small>📝 <strong>Notes:</strong> <span class="note-text">Focus on lower back</span></small>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-success btn-sm px-3">✓ Mark Completed</button>
+                                        <button class="btn btn-light btn-sm border px-3" onclick="addNote('APT12347')">📝 Add Notes</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ps-md-4">
+                                    <h6 class="fw-bold small mb-3 text-muted">Timeline</h6>
+                                    <div class="timeline-box">
+                                        <div class="mb-2"><small class="text-muted">Start</small><br><strong>02:00 PM</strong></div>
+                                        <div><small class="text-muted">End</small><br><strong>03:30 PM</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="completedTab" style="display: none;">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="ps-4 py-3">ID</th>
+                                            <th class="py-3">Customer</th>
+                                            <th class="py-3">Service</th>
+                                            <th class="py-3">Date</th>
+                                            <th class="py-3">Time</th>
+                                            <th class="py-3">Duration</th>
+                                            <th class="pe-4 py-3">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="ps-4 py-3 text-muted">APT12340</td>
+                                            <td class="py-3 fw-medium">David Martinez</td>
+                                            <td class="py-3">Hot Stone Therapy</td>
+                                            <td class="py-3">2025-12-17</td>
+                                            <td class="py-3">11:00 AM</td>
+                                            <td class="py-3">75 min</td>
+                                            <td class="pe-4 py-3"><span class="badge-completed">✓ Completed</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-4 py-3 text-muted">APT12339</td>
+                                            <td class="py-3 fw-medium">Lisa Anderson</td>
+                                            <td class="py-3">Swedish Massage</td>
+                                            <td class="py-3">2025-12-16</td>
+                                            <td class="py-3">03:00 PM</td>
+                                            <td class="py-3">60 min</td>
+                                            <td class="pe-4 py-3"><span class="badge-completed">✓ Completed</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        
+        function handleLogout() {
+            
+            window.location.href = '/';
+            
+        }
+
+        
+        function addNote(appointmentId) {
+            let note = prompt("Add notes for appointment " + appointmentId + ":");
+            if (note !== null && note.trim() !== "") {
+                $(`#note-${appointmentId} .note-text`).text(note);
+            }
+        }
+
+        
+        function switchTab(tab) {
+            $('.nav-link').removeClass('active');
+
+            if (tab === 'today') {
+                $('#btnToday').addClass('active');
+                $('#todayTab').show();
+                $('#completedTab').hide();
+            } else if (tab === 'completed') {
+                $('#btnCompleted').addClass('active');
+                $('#todayTab').hide();
+                $('#completedTab').show();
+            }
+        }
+
+        function toggleAvailability() {
+            const btn = $('#availabilityBtn');
+            const icon = $('#availabilityIcon');
+            if (btn.hasClass('btn-success')) {
+                btn.removeClass('btn-success').addClass('btn-secondary').text('Busy');
+                icon.text('✕').removeClass('text-success').addClass('text-danger');
+            } else {
+                btn.removeClass('btn-secondary').addClass('btn-success').text('Available');
+                icon.text('✓').removeClass('text-danger').addClass('text-success');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+﻿@{
+    ViewData["Title"] = "Booking - Serenity Spa";
+}
+
+<div class="container py-5">
+    <!-- Progress Steps -->
+    <div class="mb-5">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="d-flex align-items-center">
+                    <div class="text-center">
+                        <div class="step-circle active" id="step1Circle">
+                            📅
+                        </div>
+                        <div class="small fw-bold mt-2">Details</div>
+                    </div>
+                    <div class="step-line active" id="line1"></div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="d-flex align-items-center">
+                    <div class="text-center">
+                        <div class="step-circle inactive" id="step2Circle">
+                            👤
+                        </div>
+                        <div class="small text-muted mt-2" id="step2Label">Staff Selection</div>
+                    </div>
+                    <div class="step-line inactive" id="line2"></div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="text-center">
+                    <div class="step-circle inactive" id="step3Circle">
+                        💳
+                    </div>
+                    <div class="small text-muted mt-2" id="step3Label">Payment</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Step 1: Details -->
+            <div class="card border-0 shadow-sm" id="step1">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4">Appointment Details</h4>
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold mb-3">Service Selected</h6>
+                        <div class="bg-light p-3 rounded">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong id="detailServiceName"></strong>
+                                    <div class="text-muted small" id="detailServiceCategory"></div>
+                                </div>
+                                <div class="text-end">
+                                    <strong class="text-purple" id="detailServicePrice"></strong>
+                                    <div class="text-muted small" id="detailServiceDuration"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">📅 Selected Date</label>
+                        <input type="text" class="form-control form-control-lg" id="selectedDate" readonly>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">🕐 Selected Time</label>
+                        <input type="text" class="form-control form-control-lg" id="selectedTime" readonly>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Additional Notes (Optional)</label>
+                        <textarea class="form-control" rows="3" id="notes" placeholder="Any special requests or health conditions we should know about?"></textarea>
+                    </div>
+
+                    <button class="btn btn-gradient btn-lg w-100" onclick="goToStep2()">
+                        Continue to Staff Selection
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Staff Selection -->
+            <div class="card border-0 shadow-sm" id="step2" style="display:none;">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4">Select Your Therapist</h4>
+                    <p class="text-muted mb-4">Choose a preferred therapist or let us assign one for you</p>
+
+                    <div class="mb-4">
+                        <div class="form-check p-3 border rounded mb-3 payment-method-card" data-staff="">
+                            <input class="form-check-input" type="radio" name="staffSelection" id="anyStaff" value="" checked>
+                            <label class="form-check-label w-100" for="anyStaff">
+                                <strong>Any Available Therapist</strong>
+                                <div class="text-muted small">We'll assign the best available therapist for your appointment</div>
+                            </label>
+                        </div>
+
+                        <div class="form-check p-3 border rounded mb-3 payment-method-card" data-staff="1">
+                            <input class="form-check-input" type="radio" name="staffSelection" id="staff1" value="1">
+                            <label class="form-check-label w-100" for="staff1">
+                                <div class="d-flex align-items-center">
+                                    <div style="font-size: 40px;" class="me-3">👩</div>
+                                    <div>
+                                        <strong>Emma Thompson</strong>
+                                        <div class="text-muted small">Senior Therapist</div>
+                                        <div class="text-warning small">★ 4.9 / 5.0</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-check p-3 border rounded mb-3 payment-method-card" data-staff="2">
+                            <input class="form-check-input" type="radio" name="staffSelection" id="staff2" value="2">
+                            <label class="form-check-label w-100" for="staff2">
+                                <div class="d-flex align-items-center">
+                                    <div style="font-size: 40px;" class="me-3">👨</div>
+                                    <div>
+                                        <strong>Michael Rodriguez</strong>
+                                        <div class="text-muted small">Massage Specialist</div>
+                                        <div class="text-warning small">★ 4.8 / 5.0</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-check p-3 border rounded mb-3 payment-method-card" data-staff="3">
+                            <input class="form-check-input" type="radio" name="staffSelection" id="staff3" value="3">
+                            <label class="form-check-label w-100" for="staff3">
+                                <div class="d-flex align-items-center">
+                                    <div style="font-size: 40px;" class="me-3">👩</div>
+                                    <div>
+                                        <strong>Sarah Lee</strong>
+                                        <div class="text-muted small">Wellness Expert</div>
+                                        <div class="text-warning small">★ 5.0 / 5.0</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary btn-lg" onclick="goToStep1()">
+                            Back
+                        </button>
+                        <button class="btn btn-gradient btn-lg flex-grow-1" onclick="goToStep3()">
+                            Continue to Payment
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Payment -->
+            <div class="card border-0 shadow-sm" id="step3" style="display:none;">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4">Payment</h4>
+
+                    <!-- Booking Summary -->
+                    <div class="bg-light p-4 rounded mb-4">
+                        <h6 class="fw-bold mb-3">Booking Summary</h6>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Service:</div>
+                            <div class="col-6 text-end" id="summaryServiceName"></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Date:</div>
+                            <div class="col-6 text-end" id="summaryDate"></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Time:</div>
+                            <div class="col-6 text-end" id="summaryTime"></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Duration:</div>
+                            <div class="col-6 text-end" id="summaryDuration"></div>
+                        </div>
+                        <hr>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Service Fee:</div>
+                            <div class="col-6 text-end" id="summaryServiceFee"></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Tax (10%):</div>
+                            <div class="col-6 text-end" id="summaryTax"></div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6"><strong>Total Amount:</strong></div>
+                            <div class="col-6 text-end">
+                                <strong class="text-purple" style="font-size: 24px;" id="summaryTotal"></strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold mb-3">Select Payment Method</h6>
+
+                        <div class="form-check p-3 border rounded mb-3 payment-method-card" data-method="card">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="card" value="card" checked>
+                            <label class="form-check-label w-100" for="card">
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2" style="font-size: 24px;">💳</span>
+                                    <strong>Credit / Debit Card</strong>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-check p-3 border rounded mb-3 payment-method-card" data-method="wallet">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="wallet" value="wallet">
+                            <label class="form-check-label w-100" for="wallet">
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2" style="font-size: 24px;">👛</span>
+                                    <strong>Digital Wallet</strong>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Card Details -->
+                    <div id="cardDetails">
+                        <div class="mb-3">
+                            <label class="form-label">Card Number</label>
+                            <input type="text" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <label class="form-label">Expiry Date</label>
+                                <input type="text" class="form-control" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">CVV</label>
+                                <input type="text" class="form-control" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary btn-lg" onclick="goToStep2()">
+                            Back
+                        </button>
+                        <button class="btn btn-lg flex-grow-1 text-white" id="payButton" onclick="processPayment()"
+                                style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border: none;">
+                            Pay Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Screen -->
+            <div class="card border-0 shadow-lg" id="successScreen" style="display:none;">
+                <div class="card-body p-5 text-center">
+                    <div class="mb-4">
+                        <div class="success-icon">
+                            ✓
+                        </div>
+                    </div>
+                    <h2 class="fw-bold mb-3">Booking Confirmed!</h2>
+                    <p class="text-muted mb-4">Your appointment has been successfully booked. We look forward to seeing you!</p>
+
+                    <div class="bg-light p-4 rounded mb-4 text-start">
+                        <h5 class="fw-bold mb-3">Appointment Details</h5>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Appointment ID:</div>
+                            <div class="col-6 text-end"><strong id="confirmAppointmentId"></strong></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Payment ID:</div>
+                            <div class="col-6 text-end"><strong id="confirmPaymentId"></strong></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Service:</div>
+                            <div class="col-6 text-end"><strong id="confirmServiceName"></strong></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Date:</div>
+                            <div class="col-6 text-end"><strong id="confirmDate"></strong></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Time:</div>
+                            <div class="col-6 text-end"><strong id="confirmTime"></strong></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 text-muted">Duration:</div>
+                            <div class="col-6 text-end"><strong id="confirmDuration"></strong></div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6"><strong>Total Amount Paid:</strong></div>
+                            <div class="col-6 text-end">
+                                <strong class="text-success" style="font-size: 24px;" id="confirmTotal"></strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a href="customer-profile.html" class="btn btn-gradient btn-lg">
+                            View in Profile
+                        </a>
+                        <a href="services.html" class="btn btn-outline-secondary">
+                            Book Another Service
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            
+            $('#selectedDate').val('2025-12-25'); 
+            $('#selectedTime').val('10:00 AM');
+        });
+
+        // FIX FOR PROBLEM 1: Go back to Step 1 from Step 2
+        function goToStep1() {
+            $('#step2').hide();
+            $('#step1').show();
+
+            // Reset Progress UI
+            $('#step1Circle').removeClass('inactive').addClass('active');
+            $('#step2Circle').removeClass('active').addClass('inactive');
+            $('#step2Label').removeClass('fw-bold').addClass('text-muted');
+            $('#line1').addClass('active');
+        }
+
+        // Move to Staff Selection
+        function goToStep2() {
+            $('#step1').hide();
+            $('#step3').hide(); // Ensure step 3 is hidden if coming back from there
+            $('#step2').show();
+
+            // Update Progress UI
+            $('#step1Circle').removeClass('active').addClass('inactive');
+            $('#step2Circle').removeClass('inactive').addClass('active').html('👤');
+            $('#step2Label').removeClass('text-muted').addClass('fw-bold');
+            $('#line1').removeClass('active').addClass('active'); // Keep line highlighted
+        }
+
+        // FIX FOR PROBLEM 2: Logic to show only Step 3 and hide Step 2
+        function goToStep3() {
+             $('#step1').hide();
+             $('#step2').hide(); // This ensures Step 2 disappears
+             $('#step3').show();
+
+             // Update Progress UI
+             $('#step2Circle').html('✓');
+             $('#step3Circle').removeClass('inactive').addClass('active');
+             $('#step3Label').removeClass('text-muted').addClass('fw-bold');
+             $('#line2').removeClass('inactive').addClass('active');
+        }
+
+        function processPayment() {
+            $('#payButton').prop('disabled', true).html('Processing...');
+            setTimeout(function() {
+                $('#step3').hide();
+                $('#successScreen').show();
+            }, 2000);
+        }
+    </script>
+}
+}
+
